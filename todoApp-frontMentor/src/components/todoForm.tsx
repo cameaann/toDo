@@ -1,4 +1,9 @@
-import { useContext, useState, type ChangeEvent, type KeyboardEvent } from "react";
+import {
+  useContext,
+  useState,
+  type ChangeEvent,
+  type KeyboardEvent,
+} from "react";
 import { type ToDo } from "./ToDoItem";
 import ThemeContext from "../ThemeContext";
 
@@ -7,7 +12,7 @@ type ToDoFormProps = {
 };
 
 const ToDoForm = ({ addItem }: ToDoFormProps) => {
-  const theme = useContext(ThemeContext)
+  const theme = useContext(ThemeContext);
   const [toDo, setToDo] = useState<string>("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
