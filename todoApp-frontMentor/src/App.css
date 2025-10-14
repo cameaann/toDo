@@ -111,9 +111,9 @@
   display: flex;
   align-items: center;
 }
-.completed{
+.completed {
   text-decoration: line-through;
-  color:var(--darkGrayishBlue)
+  color: var(--darkGrayishBlue);
 }
 .todo.light {
   border-bottom: 1px solid var(--veryLightGrayishBlue);
@@ -158,22 +158,40 @@ input[type="checkbox"]:checked {
 }
 
 .filterButton {
+  font-family: "Josefin Sans", sans-serif;
   border: none;
   background-color: transparent;
   font-size: 1.2rem;
   cursor: pointer;
 }
-.filterButton.light, span.light{
+.filterButton.light,
+span.light {
   color: var(--darkGrayishBlue);
 }
 
-.filterButton.light:hover{
+.filterButton.light:hover {
   color: var(--darkGrayishBlueHover);
 }
-.filterButton.dark, span.dark{
+.filterButton.dark,
+span.dark {
   color: var(--lightGrayishBlue);
 }
 
-.filterButton.dark:hover{
+.filterButton.dark:hover {
   color: var(--lightGrayishBlueHover);
+}
+
+@media screen and (max-width: 600px) {
+  .wrap-container {
+    min-width: 31.25rem;
+    background-size: auto
+  }
+
+  .container {
+    width: 31.25rem;
+  }
+
+  .filterButton {
+    font-size: 1rem;
+  }
 }
