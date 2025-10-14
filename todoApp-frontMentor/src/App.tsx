@@ -11,11 +11,16 @@ function App() {
   const [toDoList] = useState<toDoListProps["toDoList"]>(
     listItems ? JSON.parse(listItems) : todoItems.list
   );
-  const [theme, setTheme] = useState("light");
+  const storedTheme = localStorage.getItem("theme");
+  const [theme, setTheme] = useState(storedTheme ?? "light");
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   return (
     <>

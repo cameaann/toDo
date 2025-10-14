@@ -15,7 +15,6 @@ type ToDoItemProps = {
 
 const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
   const theme = useContext(ThemeContext);
-  console.log(toDo);
   return (
     <li className={"todo " + theme} key={toDo.id}>
       <div>
