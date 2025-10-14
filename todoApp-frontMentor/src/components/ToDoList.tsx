@@ -72,7 +72,7 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
             toggleStatus={toggleStatus}
           />
         ))}
-       <Filter setFilter={setFilter} itemsLeft={itemsLeft} clearCompleted={clearCompleted} />
+       <Filter filter={filter} setFilter={setFilter} itemsLeft={itemsLeft} clearCompleted={clearCompleted} />
       </ul>
     </>
   );
