@@ -33,6 +33,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   align-items: center;
+  font-size: 1.8rem;
 }
 .wrap-container.light {
   background-color: var(--veryLightGray);
@@ -66,20 +67,27 @@
 }
 
 .todoInput {
-  padding: 1.5rem;
+  position: relative;
+  font-family: 'Josefin Sans', sans-serif;
+  padding: 1.5rem 1.5rem 1.5rem 4.7rem;
   border-radius: 8px;
   border: none;
   outline-style: none;
   width: -webkit-fill-available;
+  font-size: 1.8rem;
+  background-repeat: no-repeat;
+  background-position: 1.7rem 50%;
 }
 
 .todoInput.light {
   background-color: var(--veryLightGray);
+  background-image: url('./assets/circle-light.svg');
   color: var(--darkGrayishBlue);
 }
 
 .todoInput.dark {
   background-color: var(--veryDarkDesaturatedBlue);
+  background-image: url('./assets/circle-dark.svg');
   color: var(--lightGrayishBlue);
 }
 
@@ -102,7 +110,7 @@
   background-color: var(--veryDarkDesaturatedBlue);
 }
 .todo {
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   width: -webkit-fill-available;
   display: flex;
   justify-content: space-between;
@@ -125,6 +133,10 @@
   color: var(--veryLightGray);
 }
 
+input[type="checkbox"] + label:hover{
+  cursor: pointer;
+}
+
 .deleteBtn {
   background-color: transparent;
   border: none;
@@ -139,12 +151,21 @@ input[type="checkbox"] {
   box-sizing: border-box;
   width: 20px;
   height: 20px;
-  margin-right: 1rem;
-  border: 1px solid var(--darkGrayishBlue);
+  margin-right: 1.5rem;
   border-radius: 50%;
   background-color: transparent;
-  outline: none;
   transition: outline 0.1s;
+}
+input[type="checkbox"].light {
+  outline: 1px solid var(--lightGrayishBlue);
+}
+input[type="checkbox"].dark {
+  outline: 1px solid var(--darkGrayishBlue);
+}
+
+input[type="checkbox"]:hover {
+  outline: 1px solid var(--Brightblue);
+  cursor: pointer;
 }
 
 input[type="checkbox"]:checked {
@@ -179,6 +200,9 @@ span.dark {
 
 .filterButton.dark:hover {
   color: var(--lightGrayishBlueHover);
+}
+.active{
+  color: var(--Brightblue) !important;
 }
 
 @media screen and (max-width: 600px) {

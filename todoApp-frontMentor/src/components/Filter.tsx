@@ -1,25 +1,31 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import ThemeContext from "../ThemeContext";
 
 type filterProps = {
   itemsLeft?: number;
   setFilter: (filter: string) => void;
+  filter: string;
   clearCompleted: () => void;
 };
 
-const Filter = ({ itemsLeft, setFilter, clearCompleted }: filterProps) => {
+const Filter = ({ itemsLeft, filter, setFilter, clearCompleted }: filterProps) => {
+
   const theme = useContext(ThemeContext);
+
+  const cssClass = (val: string) => "filterButton " + theme + (filter === val ? " active" : "");
+
+  console.log("class", cssClass('all'));
   return (
     <li className="todo filter">
       <span className={theme}>{itemsLeft} items left</span>
       <div>
-        <button className={"filterButton " + theme} onClick={() => setFilter("all")}>
+        <button className={cssClass("all")} onClick={() => setFilter("all")}>
           All
         </button>
-        <button className={"filterButton " + theme} onClick={() => setFilter("active")}>
+        <button className={cssClass("active")} onClick={() => setFilter("active")}>
           Active
         </button>
-        <button className={"filterButton " + theme} onClick={() => setFilter("completed")}>
+        <button className={cssClass("completed")} onClick={() => setFilter("completed")}>
           Completed
         </button>
       </div>

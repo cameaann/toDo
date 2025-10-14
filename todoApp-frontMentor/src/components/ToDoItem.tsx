@@ -19,13 +19,16 @@ const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
     <li className={"todo " + theme} key={toDo.id}>
       <div>
         <input
+          className={theme}
           type="checkbox"
+		  id={toDo.id.toString()}
+		  name={toDo.text}
           checked={toDo.status === "completed"}
           onChange={() => toggleStatus(toDo.id)}
         />
-        <span className={toDo.status === "completed" ? "completed" : ""}>
+        <label htmlFor={toDo.id.toString()} className={toDo.status === "completed" ? "completed" : ""}>
           {toDo.text}
-        </span>
+        </label>
       </div>
 
       <button className="deleteBtn" onClick={() => onDelete(toDo.id)}>
