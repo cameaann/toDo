@@ -4,11 +4,11 @@ import {
   type ChangeEvent,
   type KeyboardEvent,
 } from "react";
-import { type ToDo } from "./ToDoItem";
+import { type TTask } from "../utils";
 import ThemeContext from "../ThemeContext";
 
 type ToDoFormProps = {
-  addItem: (item: ToDo) => void;
+  addItem: (item: TTask) => void;
 };
 
 const ToDoForm = ({ addItem }: ToDoFormProps) => {
@@ -21,7 +21,7 @@ const ToDoForm = ({ addItem }: ToDoFormProps) => {
   };
   const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && toDo.trim() !== "") {
-      const item: ToDo = { id: Date.now(), text: toDo, status: "todo" };
+      const item: TTask = { id: Date.now().toString(), text: toDo, status: "todo" };
       addItem(item);
       setToDo("");
     }
