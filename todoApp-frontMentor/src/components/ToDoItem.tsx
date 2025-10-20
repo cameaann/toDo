@@ -2,7 +2,7 @@ import { useContext, useRef, useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import ThemeContext from "../ThemeContext";
 import Cross from "../assets/icon-cross.svg";
-import { isTaskData, type TTask } from "../utils";
+import { isTaskData, type TTask, taskDataKey } from "../utils";
 import {
   attachClosestEdge,
   extractClosestEdge,
@@ -52,7 +52,8 @@ const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
       draggable({
         element,
         getInitialData() {
-          return { taskId: toDo.id, [Symbol.for("task")]: true };
+          const data = { taskId: toDo.id, [taskDataKey]: true };
+          return data;
         },
         onGenerateDragPreview({ nativeSetDragImage }) {
           setCustomNativeDragPreview({
@@ -81,7 +82,7 @@ const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
           return isTaskData(source.data);
         },
         getData({ input }) {
-          const data = { taskId: toDo.id, [Symbol.for("task")]: true };
+          const data = { taskId: toDo.id, [taskDataKey]: true };
           return attachClosestEdge(data, {
             element,
             input,
@@ -120,7 +121,12 @@ const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
 
   return (
     <>
-      <li ref={ref} className={"todo " + theme} key={toDo.id} data-task-id={toDo.id}>
+      <li
+        ref={ref}
+        className={"todo " + theme}
+        key={toDo.id}
+        data-task-id={toDo.id}
+      >
         <div>
           <input
             className={theme}
@@ -130,7 +136,10 @@ const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
             checked={toDo.status === "done"}
             onChange={() => toggleStatus(toDo.id)}
           />
-        <label htmlFor={toDo.id.toString()} className={toDo.status === "done" ? "completed" : ""}>
+          <label
+            htmlFor={toDo.id.toString()}
+            className={toDo.status === "done" ? "completed" : ""}
+          >
             {toDo.text}
           </label>
         </div>

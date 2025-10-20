@@ -26,8 +26,9 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
       canMonitor({ source }) {
         return isTaskData(source.data);
       },
-      onDrop({location, source}) {
-        const target =location.current.dropTargets[0];
+      onDrop({ location, source }) {
+        console.debug("monitor onDrop", { location, source });
+        const target = location.current.dropTargets[0];
         if (!target) return;
 
         const sourceData = source.data;
@@ -35,8 +36,12 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
 
         if (!isTaskData(sourceData) || !isTaskData(targetData)) return;
 
-        const indexOfSource = listItems.findIndex(item => item.id === sourceData.taskId);
-        const indexOfTarget = listItems.findIndex(item => item.id === targetData.taskId);
+        const indexOfSource = listItems.findIndex(
+          (item) => item.id === sourceData.taskId
+        );
+        const indexOfTarget = listItems.findIndex(
+          (item) => item.id === targetData.taskId
+        );
 
         if (indexOfSource < 0 || indexOfTarget < 0) return;
 
@@ -49,18 +54,19 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
               startIndex: indexOfSource,
               indexOfTarget,
               closestEdgeOfTarget,
-              axis: 'vertical'
+              axis: "vertical",
             })
           );
         });
 
-        const element = document.querySelector(`[data-task-id='${sourceData.taskId}']`);
-        if(element instanceof HTMLElement) {
+        const element = document.querySelector(
+          `[data-task-id='${sourceData.taskId}']`
+        );
+        if (element instanceof HTMLElement) {
           triggerPostMoveFlash(element);
         }
-      }
+      },
     });
-
   }, [listItems]);
 
   useEffect(() => {
@@ -90,23 +96,27 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
     switch (status) {
       case "all":
         return listItems;
-      case "done":
+      case "completed":
         return listItems.filter((item) => item.status === "done");
-      case "in-progress":
-        return listItems.filter((item) => item.status === "in-progress" || item.status === "todo");
+      case "active":
+        return listItems.filter(
+          (item) => item.status === "in-progress" || item.status === "todo"
+        );
       default:
         return listItems;
     }
   };
 
-  const itemsLeft = listItems.filter((item) => item.status === "todo" || item.status === "in-progress").length;
+  const itemsLeft = listItems.filter(
+    (item) => item.status === "todo" || item.status === "in-progress"
+  ).length;
 
   const filteredItems = filterItems(filter);
 
   const clearCompleted = () => {
     const modifiedList = listItems.filter((item) => item.status !== "done");
     setListItems(modifiedList);
-  }
+  };
 
   return (
     <>
@@ -120,7 +130,12 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
             toggleStatus={toggleStatus}
           />
         ))}
-       <Filter filter={filter} setFilter={setFilter} itemsLeft={itemsLeft} clearCompleted={clearCompleted} />
+        <Filter
+          filter={filter}
+          setFilter={setFilter}
+          itemsLeft={itemsLeft}
+          clearCompleted={clearCompleted}
+        />
       </ul>
     </>
   );
