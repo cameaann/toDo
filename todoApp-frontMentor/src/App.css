@@ -68,7 +68,7 @@
 
 .todoInput {
   position: relative;
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   padding: 1.5rem 1.5rem 1.5rem 4.7rem;
   border-radius: 8px;
   border: none;
@@ -81,13 +81,13 @@
 
 .todoInput.light {
   background-color: var(--veryLightGray);
-  background-image: url('./assets/circle-light.svg');
+  background-image: url("./assets/circle-light.svg");
   color: var(--darkGrayishBlue);
 }
 
 .todoInput.dark {
   background-color: var(--veryDarkDesaturatedBlue);
-  background-image: url('./assets/circle-dark.svg');
+  background-image: url("./assets/circle-dark.svg");
   color: var(--lightGrayishBlue);
 }
 
@@ -124,16 +124,23 @@
   color: var(--darkGrayishBlue);
 }
 .todo.light {
-  border-bottom: 1px solid var(--veryLightGrayishBlue);
   color: var(--veryDarkBlue);
 }
 
 .todo.dark {
-  border-bottom: 1px solid var(--veryDarkGrayishBlue);
   color: var(--veryLightGray);
 }
 
-input[type="checkbox"] + label:hover{
+.line.light {
+   width: -webkit-fill-available;
+  border-bottom: 1px solid var(--veryLightGrayishBlue);
+}
+.line.dark {
+   width: -webkit-fill-available;
+  border-bottom: 1px solid var(--veryDarkGrayishBlue);
+}
+
+input[type="checkbox"] + label:hover {
   cursor: pointer;
 }
 
@@ -201,14 +208,14 @@ span.dark {
 .filterButton.dark:hover {
   color: var(--lightGrayishBlueHover);
 }
-.active{
+.active {
   color: var(--Brightblue) !important;
 }
 
 @media screen and (max-width: 600px) {
   .wrap-container {
     min-width: 31.25rem;
-    background-size: auto
+    background-size: auto;
   }
 
   .container {

@@ -4,17 +4,17 @@
 		{
 			"id": "1",
 			"text": "first task",
-			"status": "completed"
+			"status": "done"
 		},
 		{
 			"id": "2",
 			"text": "second task",
-			"status": "completed"
+			"status": "done"
 		},
 		{
 			"id": "3",
 			"text": "third task",
-			"status": "pending"
+			"status": "in-progress"
 		}
 	]
 }
