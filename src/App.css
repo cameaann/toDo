@@ -28,7 +28,7 @@
 .wrap-container {
   display: flex;
   flex-direction: column;
-  min-width: 37.5rem;
+  min-width: 45rem;
   min-height: 100vh;
   background-repeat: no-repeat;
   background-size: contain;
@@ -45,7 +45,7 @@
 }
 
 .container {
-  width: 37.5rem;
+  width: 45rem;
 }
 
 .header {
@@ -66,7 +66,7 @@
   cursor: pointer;
 }
 .switchBtn > img {
-  width: 1.5rem;
+  width: 2rem;
 }
 
 .todoInput {
@@ -148,9 +148,16 @@ input[type="checkbox"] + label:hover {
 }
 
 .deleteBtn {
+  display: none;
   background-color: transparent;
   border: none;
 }
+
+.todo:hover .deleteBtn, .todo:focus-within .deleteBtn { display: inline-block;
+cursor: pointer;
+}
+
+
 .cross {
   width: 10px;
   height: 10px;
@@ -173,6 +180,9 @@ input[type="checkbox"].dark {
   outline: 1px solid var(--darkGrayishBlue);
 }
 
+.todo:hover {
+  cursor: pointer;
+}
 input[type="checkbox"]:hover {
   outline: 1px solid var(--Brightblue);
   cursor: pointer;
@@ -227,6 +237,9 @@ span.dark {
 
   .filterButton {
     font-size: 1rem;
+  }
+  .deleteBtn{
+    display:block;
   }
 }
 
