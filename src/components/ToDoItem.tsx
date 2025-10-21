@@ -1,123 +1,19 @@
-import { useContext, useRef, useState, useEffect } from "react";
+import { useContext, useRef } from "react";
 import ThemeContext from "../ThemeContext";
 import Cross from "../assets/icon-cross.svg";
-import { isTaskData, type TTask, taskDataKey } from "../utils";
-import {
-  attachClosestEdge,
-  extractClosestEdge,
-  type Edge,
-} from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
-import {
-  draggable,
-  dropTargetForElements,
-} from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
-import invariant from "tiny-invariant";
-import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
-import { pointerOutsideOfPreview } from "@atlaskit/pragmatic-drag-and-drop/element/pointer-outside-of-preview";
-import { createPortal } from "react-dom";
+import { type TTask } from "../utils";
 
-type TaskState =
-  | {
-      type: "idle";
-    }
-  | {
-      type: "preview";
-      container: HTMLElement;
-    }
-  | {
-      type: "is-dragging";
-    }
-  | {
-      type: "is-dragging-over";
-      closestEdge: Edge | null;
-    };
 
 type ToDoItemProps = {
   toDo: TTask;
   toggleStatus: (id: string) => void;
   onDelete: (id: string) => void;
 };
-const idle: TaskState = { type: "idle" };
+
 
 const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
   const theme = useContext(ThemeContext);
   const ref = useRef<HTMLLIElement | null>(null);
-  const [state, setState] = useState<TaskState>(idle);
-
-  useEffect(() => {
-    const element = ref.current;
-    invariant(element);
-    return combine(
-      draggable({
-        element,
-        getInitialData() {
-          const data = { taskId: toDo.id, [taskDataKey]: true };
-          return data;
-        },
-        onGenerateDragPreview({ nativeSetDragImage }) {
-          setCustomNativeDragPreview({
-            nativeSetDragImage,
-            getOffset: pointerOutsideOfPreview({
-              x: "16px",
-              y: "8px",
-            }),
-            render({ container }) {
-              setState({ type: "preview", container });
-            },
-          });
-        },
-
-        onDragStart() {
-          setState({ type: "is-dragging" });
-        },
-        onDrop() {
-          setState(idle);
-        },
-      }),
-      dropTargetForElements({
-        element,
-        canDrop({ source }) {
-          if (source.element === element) return false;
-          return isTaskData(source.data);
-        },
-        getData({ input }) {
-          const data = { taskId: toDo.id, [taskDataKey]: true };
-          return attachClosestEdge(data, {
-            element,
-            input,
-            allowedEdges: ["top", "bottom"],
-          });
-        },
-        getIsSticky() {
-          return true;
-        },
-        onDragEnter({ self }) {
-          const closestEdge = extractClosestEdge(self.data);
-          setState({ type: "is-dragging-over", closestEdge });
-        },
-        onDrag({ self }) {
-          const closestEdge = extractClosestEdge(self.data);
-
-          setState((current) => {
-            if (
-              current.type === "is-dragging-over" &&
-              current.closestEdge === closestEdge
-            ) {
-              return current;
-            }
-            return { type: "is-dragging-over", closestEdge };
-          });
-        },
-        onDragLeave() {
-          setState(idle);
-        },
-        onDrop() {
-          setState(idle);
-        },
-      })
-    );
-  }, [toDo]);
 
   return (
     <>
@@ -153,15 +49,9 @@ const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
         </button>
 
       </li>
-      {state.type === "preview"
-        ? createPortal(<DragPreview task={toDo} />, state.container)
-        : null}
+
     </>
   );
 };
 
 export default ToDoItem;
-
-function DragPreview({ task }: { task: TTask }) {
-  return <div className="dragPreview">{task.text}</div>;
-}
