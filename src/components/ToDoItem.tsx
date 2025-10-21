@@ -1,5 +1,4 @@
 import { useContext, useRef, useState, useEffect } from "react";
-import { createPortal } from "react-dom";
 import ThemeContext from "../ThemeContext";
 import Cross from "../assets/icon-cross.svg";
 import { isTaskData, type TTask, taskDataKey } from "../utils";
@@ -16,6 +15,7 @@ import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import invariant from "tiny-invariant";
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
 import { pointerOutsideOfPreview } from "@atlaskit/pragmatic-drag-and-drop/element/pointer-outside-of-preview";
+import { createPortal } from "react-dom";
 
 type TaskState =
   | {
@@ -123,7 +123,7 @@ const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
     <>
       <li
         ref={ref}
-        className={"todo " + theme}
+        className={"todo line " + theme}
         key={toDo.id}
         data-task-id={toDo.id}
       >
@@ -144,11 +144,15 @@ const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
           </label>
         </div>
 
-        <button className="deleteBtn" onClick={() => onDelete(toDo.id)}>
+        <button
+          id={toDo.id}
+          className="deleteBtn"
+          onClick={() => onDelete(toDo.id)}
+        >
           <img className="cross" src={Cross} />
         </button>
-      </li>
 
+      </li>
       {state.type === "preview"
         ? createPortal(<DragPreview task={toDo} />, state.container)
         : null}
@@ -156,8 +160,8 @@ const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
   );
 };
 
-function DragPreview({ task }: { task: TTask }) {
-  return <div className="border-solid rounded p-2 bg-white">{task.text}</div>;
-}
-
 export default ToDoItem;
+
+function DragPreview({ task }: { task: TTask }) {
+  return <div className="dragPreview">{task.text}</div>;
+}

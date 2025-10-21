@@ -229,3 +229,10 @@ span.dark {
     font-size: 1rem;
   }
 }
+
+.dragPreview{
+  background-color: var(--veryLightGray);
+  border-radius: 5px;
+  padding: 1rem;
+  font-size: 1.6rem;
+}
