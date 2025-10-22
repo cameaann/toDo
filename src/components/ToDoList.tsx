@@ -53,8 +53,7 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
   };
 
   const toggleStatus = (id: string) => {
-    console.log(listItems);
-    const modifiedList = listItems.map((item) => {
+      const modifiedList = listItems.map((item) => {
       if (item.id === id) {
         item.status = item.status === "done" ? "todo" : "done";
       }

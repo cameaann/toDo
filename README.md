@@ -52,11 +52,11 @@ Users should be able to:
 - Flexbox
 - [React](https://reactjs.org/) - JS library
 - [Vite.js](https://vite.dev/) - React framework
-- [pragmatic-drag-and-drop](https://atlassian.design/components/pragmatic-drag-and-drop/about) - Atlassian’s library 'Pragmatic drag and drop'
+- [dnd-kit](https://docs.dndkit.com/) - @dnd-kit – A lightweight, modular, performant, accessible and extensible drag & drop toolkit for React
 
 ### What I learned
 
-In this project, it was important for me to work with TypeScript and refine the type definitions. I also aimed to gain experience with a drag-and-drop library. For this purpose, I used the pragmatic-drag-and-drop library, which I was using for the first time. The implementation presented some challenges, so I referred to existing examples to guide my work.
+In this project, I focused on working with TypeScript and refining type definitions. I also wanted to gain experience with a drag-and-drop library. For this purpose, I explored two options: the pragmatic-drag-and-drop library and @dnd-kit. I found @dnd-kit to be more convenient and easier to work with.
 
 
 ### Continued development
@@ -66,7 +66,6 @@ In future projects, I would like to focus on using reducers for managing global 
 ### Useful resources
 
 - [Top 5 Drag-and-Drop Libraries for React in 2025](https://puckeditor.com/blog/top-5-drag-and-drop-libraries-for-react) - This article helped me to decide what dnd library to choose for my project.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
 
 
 ## Author
