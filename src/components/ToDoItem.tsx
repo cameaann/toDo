@@ -1,8 +1,8 @@
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import ThemeContext from "../ThemeContext";
 import Cross from "../assets/icon-cross.svg";
 import { type TTask } from "../utils";
-
+import { useDraggable } from "@dnd-kit/core";
 
 type ToDoItemProps = {
   toDo: TTask;
@@ -10,20 +10,28 @@ type ToDoItemProps = {
   onDelete: (id: string) => void;
 };
 
-
 const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
   const theme = useContext(ThemeContext);
-  const ref = useRef<HTMLLIElement | null>(null);
+
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: toDo.id,
+  });
+  const style = transform
+    ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+      }
+    : undefined;
 
   return (
     <>
       <li
-        ref={ref}
+        ref={setNodeRef}
+        style={style}
         className={"todo line " + theme}
         key={toDo.id}
         data-task-id={toDo.id}
       >
-        <div>
+        <div {...listeners} {...attributes} className="drag-handle">
           <input
             className={theme}
             type="checkbox"
@@ -47,9 +55,7 @@ const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
         >
           <img className="cross" src={Cross} />
         </button>
-
       </li>
-
     </>
   );
 };

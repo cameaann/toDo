@@ -4,7 +4,16 @@ import ToDoItem from "./ToDoItem";
 import ToDoForm from "./todoForm";
 import ThemeContext from "../ThemeContext";
 import Filter from "./Filter";
-
+import {
+  DndContext,
+  useSensors,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import { moveItem } from "../utils";
+import Droppable from "./Droppable";
 
 export type toDoListProps = {
   toDoList: TTask[];
@@ -13,6 +22,20 @@ export type toDoListProps = {
 const ToDoList = ({ toDoList }: toDoListProps) => {
   const [listItems, setListItems] = useState<TTask[]>(toDoList || []);
   const [filter, setFilter] = useState<string>("all");
+
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 5, // Drag only starts after moving 5px
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 150, // wait 150ms before drag starts
+        tolerance: 5, // move 5px before it's considered a drag
+      },
+    })
+  );
 
   const theme = useContext(ThemeContext);
 
@@ -30,6 +53,7 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
   };
 
   const toggleStatus = (id: string) => {
+    console.log(listItems);
     const modifiedList = listItems.map((item) => {
       if (item.id === id) {
         item.status = item.status === "done" ? "todo" : "done";
@@ -37,6 +61,20 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
       return item;
     });
     setListItems(modifiedList);
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over === null) return;
+
+    if (active.id !== over.id) {
+      setListItems((prev) => {
+        const oldIndex = prev.findIndex((t) => t.id === active.id);
+        const newIndex = prev.findIndex((t) => t.id === over.id);
+        return moveItem(prev, oldIndex, newIndex);
+      });
+    }
   };
 
   const filterItems = (status: string) => {
@@ -67,23 +105,29 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
 
   return (
     <>
-      <ToDoForm addItem={addToDo} />
-      <ul className={"todoList " + theme}>
-        {filteredItems.map((item) => (
-          <ToDoItem
-            key={item.id}
-            toDo={item}
-            onDelete={handleDelete}
-            toggleStatus={toggleStatus}
+      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+        <ToDoForm addItem={addToDo} />
+        <ul className={"todoList " + theme}>
+          {filteredItems.map((item) => (
+            <Droppable id={item.id} key={item.id}>
+              <ToDoItem
+                key={item.id}
+                toDo={item}
+                onDelete={handleDelete}
+                toggleStatus={toggleStatus}
+              />
+            </Droppable>
+          ))}
+
+          <Filter
+            filter={filter}
+            setFilter={setFilter}
+            itemsLeft={itemsLeft}
+            clearCompleted={clearCompleted}
           />
-        ))}
-        <Filter
-          filter={filter}
-          setFilter={setFilter}
-          itemsLeft={itemsLeft}
-          clearCompleted={clearCompleted}
-        />
-      </ul>
+        </ul>
+        <p className="hint-message">Drag and drop to reoder list</p>
+      </DndContext>
     </>
   );
 };
