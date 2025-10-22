@@ -22,15 +22,16 @@ function App() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
+
   return (
     <>
       <ThemeContext.Provider value={theme}>
-        <div className={"wrap-container " + theme}>
-          <div className="container">
-            <Header toggleTheme={toggleTheme} />
-            <ToDoList toDoList={toDoList} />
+          <div className={"wrap-container " + theme}>
+            <div className="container">
+              <Header toggleTheme={toggleTheme} />
+              <ToDoList toDoList={toDoList} />
+            </div>
           </div>
-        </div>
       </ThemeContext.Provider>
     </>
   );

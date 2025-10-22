@@ -28,7 +28,7 @@
 .wrap-container {
   display: flex;
   flex-direction: column;
-  min-width: 37.5rem;
+  min-width: 45rem;
   min-height: 100vh;
   background-repeat: no-repeat;
   background-size: contain;
@@ -45,7 +45,7 @@
 }
 
 .container {
-  width: 37.5rem;
+  width: 45rem;
 }
 
 .header {
@@ -66,7 +66,7 @@
   cursor: pointer;
 }
 .switchBtn > img {
-  width: 1.5rem;
+  width: 2rem;
 }
 
 .todoInput {
@@ -118,6 +118,12 @@
   display: flex;
   justify-content: space-between;
 }
+.todo .line{
+  width: -webkit-fill-available;
+}
+.todo-wrapper{
+  width: -webkit-fill-available;
+}
 .todo > div {
   display: flex;
   align-items: center;
@@ -148,9 +154,16 @@ input[type="checkbox"] + label:hover {
 }
 
 .deleteBtn {
+  display: none;
   background-color: transparent;
   border: none;
 }
+
+.todo:hover .deleteBtn, .todo:focus-within .deleteBtn { display: inline-block;
+cursor: pointer;
+}
+
+
 .cross {
   width: 10px;
   height: 10px;
@@ -173,6 +186,9 @@ input[type="checkbox"].dark {
   outline: 1px solid var(--darkGrayishBlue);
 }
 
+.todo:hover {
+  cursor: pointer;
+}
 input[type="checkbox"]:hover {
   outline: 1px solid var(--Brightblue);
   cursor: pointer;
@@ -192,7 +208,7 @@ input[type="checkbox"]:checked {
   font-family: "Josefin Sans", sans-serif;
   border: none;
   background-color: transparent;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   cursor: pointer;
 }
 .filterButton.light,
@@ -215,6 +231,20 @@ span.dark {
   color: var(--Brightblue) !important;
 }
 
+.hint-message {
+  margin-top: 4rem;
+  font-size: 1.2rem;
+  color: var(--darkGrayishBlue);
+}
+
+.dragPreview{
+  background-color: var(--veryLightGray);
+  border-radius: 5px;
+  padding: 1rem;
+  font-size: 1.6rem;
+}
+
+
 @media screen and (max-width: 600px) {
   .wrap-container {
     min-width: 31.25rem;
@@ -228,4 +258,8 @@ span.dark {
   .filterButton {
     font-size: 1rem;
   }
+  .deleteBtn{
+    display:block;
+  }
 }
+

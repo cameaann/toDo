@@ -14,7 +14,6 @@ const Filter = ({ itemsLeft, filter, setFilter, clearCompleted }: filterProps) =
 
   const cssClass = (val: string) => "filterButton " + theme + (filter === val ? " active" : "");
 
-  console.log("class", cssClass('all'));
   return (
     <li className="todo filter">
       <span className={theme}>{itemsLeft} items left</span>

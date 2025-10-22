@@ -4,12 +4,16 @@ import ToDoItem from "./ToDoItem";
 import ToDoForm from "./todoForm";
 import ThemeContext from "../ThemeContext";
 import Filter from "./Filter";
-import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import { extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
-import { reorderWithEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge";
-import { triggerPostMoveFlash } from "@atlaskit/pragmatic-drag-and-drop-flourish/trigger-post-move-flash";
-import { flushSync } from "react-dom";
-import { isTaskData } from "../utils";
+import {
+  DndContext,
+  useSensors,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import { moveItem } from "../utils";
+import Droppable from "./Droppable";
 
 export type toDoListProps = {
   toDoList: TTask[];
@@ -19,55 +23,21 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
   const [listItems, setListItems] = useState<TTask[]>(toDoList || []);
   const [filter, setFilter] = useState<string>("all");
 
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 5, // Drag only starts after moving 5px
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 150, // wait 150ms before drag starts
+        tolerance: 5, // move 5px before it's considered a drag
+      },
+    })
+  );
+
   const theme = useContext(ThemeContext);
-
-  useEffect(() => {
-    return monitorForElements({
-      canMonitor({ source }) {
-        return isTaskData(source.data);
-      },
-      onDrop({ location, source }) {
-        console.debug("monitor onDrop", { location, source });
-        const target = location.current.dropTargets[0];
-        if (!target) return;
-
-        const sourceData = source.data;
-        const targetData = target.data;
-
-        if (!isTaskData(sourceData) || !isTaskData(targetData)) return;
-
-        const indexOfSource = listItems.findIndex(
-          (item) => item.id === sourceData.taskId
-        );
-        const indexOfTarget = listItems.findIndex(
-          (item) => item.id === targetData.taskId
-        );
-
-        if (indexOfSource < 0 || indexOfTarget < 0) return;
-
-        const closestEdgeOfTarget = extractClosestEdge(targetData);
-
-        flushSync(() => {
-          setListItems(
-            reorderWithEdge({
-              list: listItems,
-              startIndex: indexOfSource,
-              indexOfTarget,
-              closestEdgeOfTarget,
-              axis: "vertical",
-            })
-          );
-        });
-
-        const element = document.querySelector(
-          `[data-task-id='${sourceData.taskId}']`
-        );
-        if (element instanceof HTMLElement) {
-          triggerPostMoveFlash(element);
-        }
-      },
-    });
-  }, [listItems]);
 
   useEffect(() => {
     localStorage.setItem("toDoList", JSON.stringify(listItems));
@@ -83,13 +53,27 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
   };
 
   const toggleStatus = (id: string) => {
-    const modifiedList = listItems.map((item) => {
+      const modifiedList = listItems.map((item) => {
       if (item.id === id) {
         item.status = item.status === "done" ? "todo" : "done";
       }
       return item;
     });
     setListItems(modifiedList);
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over === null) return;
+
+    if (active.id !== over.id) {
+      setListItems((prev) => {
+        const oldIndex = prev.findIndex((t) => t.id === active.id);
+        const newIndex = prev.findIndex((t) => t.id === over.id);
+        return moveItem(prev, oldIndex, newIndex);
+      });
+    }
   };
 
   const filterItems = (status: string) => {
@@ -120,23 +104,29 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
 
   return (
     <>
-      <ToDoForm addItem={addToDo} />
-      <ul className={"todoList " + theme}>
-        {filteredItems.map((item) => (
-          <ToDoItem
-            key={item.id}
-            toDo={item}
-            onDelete={handleDelete}
-            toggleStatus={toggleStatus}
+      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+        <ToDoForm addItem={addToDo} />
+        <ul className={"todoList " + theme}>
+          {filteredItems.map((item) => (
+            <Droppable id={item.id} key={item.id}>
+              <ToDoItem
+                key={item.id}
+                toDo={item}
+                onDelete={handleDelete}
+                toggleStatus={toggleStatus}
+              />
+            </Droppable>
+          ))}
+
+          <Filter
+            filter={filter}
+            setFilter={setFilter}
+            itemsLeft={itemsLeft}
+            clearCompleted={clearCompleted}
           />
-        ))}
-        <Filter
-          filter={filter}
-          setFilter={setFilter}
-          itemsLeft={itemsLeft}
-          clearCompleted={clearCompleted}
-        />
-      </ul>
+        </ul>
+        <p className="hint-message">Drag and drop to reoder list</p>
+      </DndContext>
     </>
   );
 };
