@@ -31,7 +31,7 @@
   min-width: 45rem;
   min-height: 100vh;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 100% 23rem;
   align-items: center;
   font-size: 1.8rem;
 }
@@ -53,7 +53,8 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 1rem 0;
-  margin-top: 2rem;
+  margin-top: 4rem;
+  margin-bottom: 1.5rem;
   color: var(--veryLightGray);
   text-transform: uppercase;
 }
@@ -72,26 +73,83 @@
 .todoInput {
   position: relative;
   font-family: "Josefin Sans", sans-serif;
-  padding: 1.5rem 1.5rem 1.5rem 4.7rem;
+  padding: 1.5rem 1.5rem 1.5rem 6rem;
   border-radius: 8px;
   border: none;
   outline-style: none;
   width: -webkit-fill-available;
   font-size: 1.8rem;
   background-repeat: no-repeat;
-  background-position: 1.7rem 50%;
+  background-position: 2.2rem 50%;
+}
+input[type="text"].light,
+textarea.light {
+  background-color: var(--veryLightGray);
+  color: var(--darkGrayishBlue);
+  border: none;
+}
+input[type="text"].dark,
+textarea.dark {
+  background-color: var(--veryDarkDesaturatedBlue);
+  color: var(--lightGrayishBlue);
+  border: none;
 }
 
+textarea {
+  resize: none;
+  height: auto;
+  padding: 0;
+  /* Hide scrollbar (cross-browser) */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE & Edge */
+  overflow: -moz-scrollbars-none; /* Old Firefox */
+}
+
+textarea::-webkit-scrollbar {
+  display: none;
+}
+textarea::-webkit-scrollbar-button {
+  height: 0;
+  width: 0;
+}
+textarea::-webkit-scrollbar-corner {
+  background: transparent;
+}
+/*
+textarea::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  background-clip: padding-box;
+  border: solid transparent;
+  border-width: 1px 1px 1px 6px;
+  padding: 100px 0 0;
+  -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.07);
+  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.07);
+} */
+
+
+.edit-input {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 1.8rem;
+  width: 35rem;
+  box-sizing: border-box;
+  line-height: 1.25;
+  border: none;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+.edit-input:focus {
+  outline: none;
+}
+
+
 .todoInput.light {
-  background-color: var(--veryLightGray);
   background-image: url("./assets/circle-light.svg");
-  color: var(--darkGrayishBlue);
 }
 
 .todoInput.dark {
-  background-color: var(--veryDarkDesaturatedBlue);
   background-image: url("./assets/circle-dark.svg");
-  color: var(--lightGrayishBlue);
 }
 
 .todoList {
@@ -113,24 +171,25 @@
   background-color: var(--veryDarkDesaturatedBlue);
 }
 .todo {
-  padding: 1rem 1.5rem;
+  padding: 1rem 2rem;
   width: -webkit-fill-available;
   display: flex;
   justify-content: space-between;
 }
-.todo .line{
+.todo .line {
   width: -webkit-fill-available;
 }
-.todo-wrapper{
+.todo-wrapper {
   width: -webkit-fill-available;
 }
 .todo > div {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 .completed {
   text-decoration: line-through;
   color: var(--darkGrayishBlue);
+  opacity: 50%;
 }
 .todo.light {
   color: var(--veryDarkBlue);
@@ -141,16 +200,12 @@
 }
 
 .line.light {
-   width: -webkit-fill-available;
+  width: -webkit-fill-available;
   border-bottom: 1px solid var(--veryLightGrayishBlue);
 }
 .line.dark {
-   width: -webkit-fill-available;
+  width: -webkit-fill-available;
   border-bottom: 1px solid var(--veryDarkGrayishBlue);
-}
-
-input[type="checkbox"] + label:hover {
-  cursor: pointer;
 }
 
 .deleteBtn {
@@ -159,10 +214,11 @@ input[type="checkbox"] + label:hover {
   border: none;
 }
 
-.todo:hover .deleteBtn, .todo:focus-within .deleteBtn { display: inline-block;
-cursor: pointer;
+.todo:hover .deleteBtn,
+.todo:focus-within .deleteBtn {
+  display: inline-block;
+  cursor: pointer;
 }
-
 
 .cross {
   width: 10px;
@@ -174,7 +230,7 @@ input[type="checkbox"] {
   box-sizing: border-box;
   width: 20px;
   height: 20px;
-  margin-right: 1.5rem;
+  margin-right: 2rem;
   border-radius: 50%;
   background-color: transparent;
   transition: outline 0.1s;
@@ -193,6 +249,20 @@ input[type="checkbox"]:hover {
   outline: 1px solid var(--Brightblue);
   cursor: pointer;
 }
+.content > label {
+  display: block;
+  width: 35rem;
+  box-sizing: border-box;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+.content {
+  position: relative;
+}
+
+.content:hover {
+  cursor: text;
+}
 
 input[type="checkbox"]:checked {
   background-image: url("./assets/icon-check.svg"), var(--checkBackground);
@@ -209,8 +279,10 @@ input[type="checkbox"]:checked {
   border: none;
   background-color: transparent;
   font-size: 1.4rem;
+  font-weight: 700;
   cursor: pointer;
 }
+
 .filterButton.light,
 span.light {
   color: var(--darkGrayishBlue);
@@ -230,25 +302,42 @@ span.dark {
 .active {
   color: var(--Brightblue) !important;
 }
-
+.filterButton.light.clear,
+.filterButton.dark.clear {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
 .hint-message {
   margin-top: 4rem;
   font-size: 1.2rem;
   color: var(--darkGrayishBlue);
 }
 
-.dragPreview{
+.dragPreview {
   background-color: var(--veryLightGray);
   border-radius: 5px;
   padding: 1rem;
   font-size: 1.6rem;
 }
+.drag-handle {
+  display: flex;
+}
 
+.desktop-filter {
+  display: block;
+}
+.mobile-filter {
+  display: none;
+}
 
 @media screen and (max-width: 600px) {
+  .header {
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+  }
   .wrap-container {
     min-width: 31.25rem;
-    background-size: auto;
+    background-size: 100% 20rem;
   }
 
   .container {
@@ -256,10 +345,28 @@ span.dark {
   }
 
   .filterButton {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
   }
-  .deleteBtn{
-    display:block;
+  .deleteBtn {
+    display: block;
+  }
+  .desktop-filter {
+    display: none !important;
+  }
+  .mobile-filter {
+    display: block !important;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
+  }
+  .mobile-filter.light {
+    background-color: var(--veryLightGray);
+  }
+  .mobile-filter.dark {
+    background-color: var(--veryDarkDesaturatedBlue);
   }
 }
-
