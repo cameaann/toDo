@@ -3,14 +3,21 @@ import ThemeContext from "../ThemeContext";
 import Cross from "../assets/icon-cross.svg";
 import { type TTask } from "../utils";
 import { useDraggable } from "@dnd-kit/core";
+import ToDoItemContent from "./ToDoItemContent";
 
 type ToDoItemProps = {
   toDo: TTask;
   toggleStatus: (id: string) => void;
   onDelete: (id: string) => void;
+  saveChanges: (toDo: TTask) => void;
 };
 
-const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
+const ToDoItem = ({
+  toDo,
+  toggleStatus,
+  onDelete,
+  saveChanges,
+}: ToDoItemProps) => {
   const theme = useContext(ThemeContext);
 
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -33,19 +40,13 @@ const ToDoItem = ({ toDo, toggleStatus, onDelete }: ToDoItemProps) => {
       >
         <div {...listeners} {...attributes} className="drag-handle">
           <input
-            className={theme}
+            className={"item " + theme}
             type="checkbox"
-            id={toDo.id.toString()}
             name={toDo.text}
             checked={toDo.status === "done"}
             onChange={() => toggleStatus(toDo.id)}
           />
-          <label
-            htmlFor={toDo.id.toString()}
-            className={toDo.status === "done" ? "completed" : ""}
-          >
-            {toDo.text}
-          </label>
+          <ToDoItemContent toDo={toDo} saveChanges={saveChanges} />
         </div>
 
         <button

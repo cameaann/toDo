@@ -21,7 +21,11 @@ const ToDoForm = ({ addItem }: ToDoFormProps) => {
   };
   const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && toDo.trim() !== "") {
-      const item: TTask = { id: Date.now().toString(), text: toDo, status: "todo" };
+      const item: TTask = {
+        id: Date.now().toString(),
+        text: toDo,
+        status: "todo",
+      };
       addItem(item);
       setToDo("");
     }
@@ -29,6 +33,7 @@ const ToDoForm = ({ addItem }: ToDoFormProps) => {
   return (
     <form>
       <input
+        type="text"
         className={"todoInput " + theme}
         id="createTask"
         value={toDo}

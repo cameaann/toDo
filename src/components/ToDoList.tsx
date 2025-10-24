@@ -3,7 +3,6 @@ import { type TTask } from "../utils";
 import ToDoItem from "./ToDoItem";
 import ToDoForm from "./todoForm";
 import ThemeContext from "../ThemeContext";
-import Filter from "./Filter";
 import {
   DndContext,
   useSensors,
@@ -14,6 +13,8 @@ import {
 } from "@dnd-kit/core";
 import { moveItem } from "../utils";
 import Droppable from "./Droppable";
+import ListFooter from "./ListFooter";
+import Filter from "./Filter";
 
 export type toDoListProps = {
   toDoList: TTask[];
@@ -53,7 +54,7 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
   };
 
   const toggleStatus = (id: string) => {
-      const modifiedList = listItems.map((item) => {
+    const modifiedList = listItems.map((item) => {
       if (item.id === id) {
         item.status = item.status === "done" ? "todo" : "done";
       }
@@ -102,6 +103,16 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
     setListItems(modifiedList);
   };
 
+  const saveChanges = (updatedItem: TTask) => {
+    const modifiedList = listItems.map((item) => {
+      if (item.id === updatedItem.id) {
+        return updatedItem;
+      }
+      return item;
+    });
+    setListItems(modifiedList);
+  };
+
   return (
     <>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
@@ -114,17 +125,21 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
                 toDo={item}
                 onDelete={handleDelete}
                 toggleStatus={toggleStatus}
+                saveChanges={saveChanges}
               />
             </Droppable>
           ))}
 
-          <Filter
+          <ListFooter
             filter={filter}
             setFilter={setFilter}
             itemsLeft={itemsLeft}
             clearCompleted={clearCompleted}
           />
         </ul>
+        <div className={`mobile-filter ${theme}`}>
+          <Filter filter={filter} setFilter={setFilter} />
+        </div>
         <p className="hint-message">Drag and drop to reoder list</p>
       </DndContext>
     </>
