@@ -257,6 +257,12 @@ input[type="checkbox"]:checked {
   font-size: 1.2rem;
   padding: 1.5rem 2rem;
 }
+.filter.dark {
+  background-color: var(--veryDarkDesaturatedBlue);
+}
+filter.light {
+  background-color: var(--veryLightGray);
+}
 
 .filterButton {
   font-family: "Josefin Sans", sans-serif;
@@ -327,6 +333,21 @@ span.dark {
   .container {
     width: 31.25rem;
   }
+  .content > label {
+    width: 22rem;
+  }
+  .edit-input {
+    width: 22rem;
+    padding: 0.5rem 1rem;
+  }
+
+  input[type="checkbox"] {
+    margin-right: 1rem;
+  }
+
+  .todo {
+    padding: 1rem 1.5rem;
+  }
 
   .filterButton {
     font-size: 1.2rem;
@@ -346,7 +367,12 @@ span.dark {
     box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
     -webkit-box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
+    margin-top: 2rem;
   }
+  .todo.filter {
+    padding: 1.5rem 1rem;
+  }
+
   .mobile-filter.light {
     background-color: var(--veryLightGray);
   }

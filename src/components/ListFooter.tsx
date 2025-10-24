@@ -18,9 +18,9 @@ const ListFooter = ({
   const theme = useContext(ThemeContext);
 
   return (
-    <li className="todo filter">
+    <li className={"todo filter " + theme}>
       <span className={theme}>{itemsLeft} items left</span>
-      <div className="desktop-filter">
+      <div className={"desktop-filter " + theme}>
         <Filter filter={filter} setFilter={setFilter} />
       </div>
       <button
