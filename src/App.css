@@ -103,33 +103,11 @@ textarea {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE & Edge */
   overflow: -moz-scrollbars-none; /* Old Firefox */
+  overflow: hidden;
 }
-
-textarea::-webkit-scrollbar {
-  display: none;
-}
-textarea::-webkit-scrollbar-button {
-  height: 0;
-  width: 0;
-}
-textarea::-webkit-scrollbar-corner {
-  background: transparent;
-}
-/*
-textarea::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  background-clip: padding-box;
-  border: solid transparent;
-  border-width: 1px 1px 1px 6px;
-  padding: 100px 0 0;
-  -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.07);
-  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.07);
-} */
-
 
 .edit-input {
+  display: block;
   font-family: "Josefin Sans", sans-serif;
   font-size: 1.8rem;
   width: 35rem;
@@ -138,11 +116,11 @@ textarea::-webkit-scrollbar-thumb {
   border: none;
   text-align: left;
   overflow-wrap: break-word;
+  overflow: hidden;
 }
 .edit-input:focus {
   outline: none;
 }
-
 
 .todoInput.light {
   background-image: url("./assets/circle-light.svg");
@@ -156,12 +134,13 @@ textarea::-webkit-scrollbar-thumb {
   list-style: none;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   border-radius: 8px;
   padding: 0;
   box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
+  max-height: 600px;
+  overflow-y: auto;
 }
 
 .todoList.light {
@@ -184,7 +163,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 .todo > div {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 }
 .completed {
   text-decoration: line-through;
@@ -249,17 +228,15 @@ input[type="checkbox"]:hover {
   outline: 1px solid var(--Brightblue);
   cursor: pointer;
 }
+
 .content > label {
   display: block;
   width: 35rem;
   box-sizing: border-box;
   text-align: left;
   overflow-wrap: break-word;
+  line-height: 1.25;
 }
-.content {
-  position: relative;
-}
-
 .content:hover {
   cursor: text;
 }
