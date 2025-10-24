@@ -134,14 +134,19 @@ textarea {
   list-style: none;
   display: flex;
   flex-direction: column;
-  border-radius: 8px;
+  border-radius: 8px 8px 0 0;
   padding: 0;
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-bottom: 0;
+}
+
+.todoListWrap {
   box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
-  max-height: 600px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  border-radius: 8px;
 }
 
 .todoList.light {
@@ -250,6 +255,7 @@ input[type="checkbox"]:checked {
 
 .filter {
   font-size: 1.2rem;
+  padding: 1.5rem 2rem;
 }
 
 .filterButton {

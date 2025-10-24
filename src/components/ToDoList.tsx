@@ -117,26 +117,28 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
     <>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
         <ToDoForm addItem={addToDo} />
-        <ul className={"todoList " + theme}>
-          {filteredItems.map((item) => (
-            <Droppable id={item.id} key={item.id}>
-              <ToDoItem
-                key={item.id}
-                toDo={item}
-                onDelete={handleDelete}
-                toggleStatus={toggleStatus}
-                saveChanges={saveChanges}
-              />
-            </Droppable>
-          ))}
-
+        <div className="todoListWrap">
+          <ul className={"todoList " + theme}>
+            {filteredItems.map((item) => (
+              <Droppable id={item.id} key={item.id}>
+                <ToDoItem
+                  key={item.id}
+                  toDo={item}
+                  onDelete={handleDelete}
+                  toggleStatus={toggleStatus}
+                  saveChanges={saveChanges}
+                />
+              </Droppable>
+            ))}
+          </ul>
           <ListFooter
             filter={filter}
             setFilter={setFilter}
             itemsLeft={itemsLeft}
             clearCompleted={clearCompleted}
           />
-        </ul>
+        </div>
+
         <div className={`mobile-filter ${theme}`}>
           <Filter filter={filter} setFilter={setFilter} />
         </div>
