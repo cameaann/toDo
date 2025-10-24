@@ -46,16 +46,16 @@ const ToDoItemContent = ({ toDo, saveChanges }: ToDoItemContentProps) => {
   useEffect(() => {
     if (editMode) {
       handleInput();
-      if (ref.current) ref.current.focus();
+        if (ref.current) ref.current.focus();
     }
-  }, [editMode]);
+  }, [editMode, editedText]);
 
   return (
     <div className="content">
       {editMode ? (
         <textarea
           id={toDo.id}
-		  rows={1}
+          rows={1}
           ref={ref}
           className={
             toDo.status === "done"
