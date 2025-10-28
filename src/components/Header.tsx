@@ -12,12 +12,12 @@ const Header = ({ toggleTheme }: headerProps) => {
   const switchIcon = theme === "light" ? IconMoon : IconSun;
   return (
     <>
-      <div className="header">
+      <header className="header">
         <h1>Todo</h1>
-        <button className="switchBtn" onClick={toggleTheme}>
-          <img src={switchIcon} />
+        <button className="switchBtn" aria-label="Switch theme" onClick={toggleTheme}>
+          <img src={switchIcon} alt={theme === "light" ? "moon" : "sun"} />
         </button>
-      </div>
+      </header>
     </>
   );
 };

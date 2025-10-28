@@ -68,6 +68,7 @@ const ToDoItemContent = ({ toDo, saveChanges }: ToDoItemContentProps) => {
         ></textarea>
       ) : (
         <label
+          htmlFor={toDo.id}
           className={toDo.status === "done" ? "completed" : ""}
           onClick={() => setEdit(true, toDo.text)}
         >

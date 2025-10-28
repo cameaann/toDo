@@ -31,7 +31,7 @@ const ToDoItem = ({
 
   return (
     <>
-      <li
+      <div
         ref={setNodeRef}
         style={style}
         className={"todo line " + theme}
@@ -44,6 +44,7 @@ const ToDoItem = ({
             type="checkbox"
             name={toDo.text}
             checked={toDo.status === "done"}
+            aria-label={"check " + toDo.text}
             onChange={() => toggleStatus(toDo.id)}
           />
           <ToDoItemContent toDo={toDo} saveChanges={saveChanges} />
@@ -56,7 +57,7 @@ const ToDoItem = ({
         >
           <img className="cross" src={Cross} />
         </button>
-      </li>
+      </div>
     </>
   );
 };

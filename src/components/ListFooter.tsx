@@ -18,7 +18,7 @@ const ListFooter = ({
   const theme = useContext(ThemeContext);
 
   return (
-    <li className={"todo filter " + theme}>
+    <div className={"todo filter " + theme}>
       <span className={theme}>{itemsLeft} items left</span>
       <div className={"desktop-filter " + theme}>
         <Filter filter={filter} setFilter={setFilter} />
@@ -29,7 +29,7 @@ const ListFooter = ({
       >
         Clear completed
       </button>
-    </li>
+    </div>
   );
 };
 

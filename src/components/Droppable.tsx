@@ -6,9 +6,9 @@ const Droppable = (props: { children: React.ReactNode; id: string }) => {
   });
 
   return (
-    <div className="todo-wrapper" ref={setNodeRef}>
+    <li className="todo-wrapper" ref={setNodeRef}>
       {props.children}
-    </div>
+    </li>
   );
 }
 

@@ -26,12 +26,12 @@ function App() {
   return (
     <>
       <ThemeContext.Provider value={theme}>
-          <div className={"wrap-container " + theme}>
+          <main className={"wrap-container " + theme}>
             <div className="container">
               <Header toggleTheme={toggleTheme} />
               <ToDoList toDoList={toDoList} />
             </div>
-          </div>
+          </main>
       </ThemeContext.Provider>
     </>
   );
