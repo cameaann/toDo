@@ -13,16 +13,14 @@
 
   --veryDarkBlue: hsl(235, 21%, 11%);
   --veryDarkDesaturatedBlue: hsl(235, 24%, 19%);
-  --lightGrayishBlue: hsl(234, 39%, 85%);
+  --lightGrayishBlueDark: hsl(234, 39%, 85%);
   --lightGrayishBlueHover: hsl(236, 33%, 92%);
   --darkGrayishBlue: hsl(234, 11%, 52%);
   --veryDarkGrayishBlue: hsl(233, 14%, 35%);
   --veryDarkGrayishBlueHpver: hsl(237, 14%, 26%);
-}
 
-#root {
-  margin: 0 auto;
-  text-align: center;
+
+  --shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
 }
 
 .wrap-container {
@@ -53,8 +51,8 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 1rem 0;
-  margin-top: 4rem;
-  margin-bottom: 1.5rem;
+  margin-block-start: 4rem;
+  margin-block-end: 1.5rem;
   color: var(--veryLightGray);
   text-transform: uppercase;
 }
@@ -91,7 +89,7 @@ textarea.light {
 input[type="text"].dark,
 textarea.dark {
   background-color: var(--veryDarkDesaturatedBlue);
-  color: var(--lightGrayishBlue);
+  color: var(--lightGrayishBlueDark);
   border: none;
 }
 
@@ -136,16 +134,16 @@ textarea {
   flex-direction: column;
   border-radius: 8px 8px 0 0;
   padding: 0;
-  max-height: 500px;
+  max-height: 50rem;
   overflow-y: auto;
   overflow-x: hidden;
-  margin-bottom: 0;
+  margin-block-end: 0;
 }
 
 .todoListWrap {
-  box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
+  box-shadow: var(--shadow );
+  -webkit-box-shadow: var(--shadow);
+  -moz-box-shadow: var(--shadow);
   border-radius: 8px;
 }
 
@@ -178,12 +176,12 @@ textarea {
 }
 .todo.light {
   color: var(--veryDarkBlue);
-  cursor: none;
-
+cursor: none;
 }
 
 .todo.dark {
   color: var(--veryLightGray);
+  cursor: none;
 }
 
 .line.light {
@@ -217,10 +215,9 @@ input[type="checkbox"] {
   box-sizing: border-box;
   width: 20px;
   height: 20px;
-  margin-right: 2rem;
+  margin-inline-end: 2rem;
   border-radius: 50%;
   background-color: transparent;
-  transition: outline 0.1s;
 }
 input[type="checkbox"].light {
   outline: 1px solid var(--lightGrayishBlue);
@@ -283,20 +280,23 @@ input[type="checkbox"]:checked {
 span.light {
   color: var(--darkGrayishBlue);
 }
+span.dark, span.light {
+  cursor: default;
+}
 
 .filterButton.light:hover {
   color: var(--darkGrayishBlueHover);
 }
 .filterButton.dark,
 span.dark {
-  color: var(--lightGrayishBlue);
+  color: var(--lightGrayishBlueDark);
 }
 
 .filterButton.dark:hover {
   color: var(--lightGrayishBlueHover);
 }
-.active {
-  color: var(--Brightblue) !important;
+button.filterButton.active {
+  color: var(--Brightblue);
 }
 .filterButton.light.clear,
 .filterButton.dark.clear {
@@ -304,9 +304,10 @@ span.dark {
   font-weight: 400;
 }
 .hint-message {
-  margin-top: 4rem;
+  margin-block-start: 4rem;
   font-size: 1.2rem;
   color: var(--darkGrayishBlue);
+  text-align: center;
 }
 
 .dragPreview {
@@ -326,10 +327,10 @@ span.dark {
   display: none;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 60em) {
   .header {
-    margin-top: 3rem;
-    margin-bottom: 1.5rem;
+    margin-block-start: 3rem;
+    margin-block-end: 1.5rem;
   }
   .wrap-container {
     min-width: 31.25rem;
@@ -348,7 +349,7 @@ span.dark {
   }
 
   input[type="checkbox"] {
-    margin-right: 1rem;
+    margin-inline-end: 1rem;
   }
 
   .todo {
@@ -362,18 +363,18 @@ span.dark {
   .deleteBtn {
     display: block;
   }
-  .desktop-filter {
-    display: none !important;
+  div.desktop-filter {
+    display: none;
   }
-  .mobile-filter {
-    display: block !important;
+  div.mobile-filter {
+    display: block;
     justify-content: center;
     padding: 1rem;
     border-radius: 5px;
-    box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
-    -webkit-box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 32px -16px rgba(0, 0, 0, 0.75);
-    margin-top: 2rem;
+    box-shadow: var(--shadow);
+    -webkit-box-shadow: var(--shadow);
+    -moz-box-shadow: var(--shadow);
+    margin-block-start: 2rem;
   }
   .todo.filter {
     padding: 1.5rem 1rem;
