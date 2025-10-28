@@ -10,7 +10,7 @@ const Filter = ({filter, setFilter}: filterProps) => {
 	const theme = useContext(ThemeContext);
 	const cssClass = (val: string) => "filterButton " + theme + (filter === val ? " active" : "");
   return (
-    <div>
+    <div className="center">
       <button className={cssClass("all")} onClick={() => setFilter("all")}>
         All
       </button>
