@@ -8,11 +8,17 @@ import {
   useSensors,
   MouseSensor,
   TouchSensor,
+  KeyboardSensor,
   useSensor,
+  closestCenter,
   type DragEndEvent,
 } from "@dnd-kit/core";
-import { moveItem } from "../utils";
-import Droppable from "./Droppable";
+import {
+  SortableContext,
+  arrayMove,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import ListFooter from "./ListFooter";
 import Filter from "./Filter";
 
@@ -35,6 +41,9 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
         delay: 150, // wait 150ms before drag starts
         tolerance: 5, // move 5px before it's considered a drag
       },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
     })
   );
 
@@ -63,6 +72,7 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
     setListItems(modifiedList);
   };
 
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
@@ -72,7 +82,7 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
       setListItems((prev) => {
         const oldIndex = prev.findIndex((t) => t.id === active.id);
         const newIndex = prev.findIndex((t) => t.id === over.id);
-        return moveItem(prev, oldIndex, newIndex);
+        return arrayMove(prev, oldIndex, newIndex);
       });
     }
   };
@@ -115,12 +125,19 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
 
   return (
     <>
-      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-        <ToDoForm addItem={addToDo} />
-        <div className="todoListWrap">
-          <ul className={"todoList " + theme}>
-            {filteredItems.map((item) => (
-              <Droppable id={item.id} key={item.id}>
+      <DndContext
+        sensors={sensors}
+        onDragEnd={handleDragEnd}
+        collisionDetection={closestCenter}
+      >
+        <SortableContext
+          items={filteredItems}
+          strategy={verticalListSortingStrategy}
+        >
+          <ToDoForm addItem={addToDo} />
+          <div className="todoListWrap">
+            <ul className={"todoList " + theme}>
+              {filteredItems.map((item) => (
                 <ToDoItem
                   key={item.id}
                   toDo={item}
@@ -128,21 +145,22 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
                   toggleStatus={toggleStatus}
                   saveChanges={saveChanges}
                 />
-              </Droppable>
-            ))}
-          </ul>
-          <ListFooter
-            filter={filter}
-            setFilter={setFilter}
-            itemsLeft={itemsLeft}
-            clearCompleted={clearCompleted}
-          />
-        </div>
+              ))}
+            </ul>
+            <ListFooter
+              filter={filter}
+              setFilter={setFilter}
+              itemsLeft={itemsLeft}
+              clearCompleted={clearCompleted}
+            />
+          </div>
 
-        <div className={`mobile-filter ${theme}`}>
-          <Filter filter={filter} setFilter={setFilter} />
-        </div>
-        <p className="hint-message">Drag and drop to reoder list</p>
+          <div className={`mobile-filter ${theme}`}>
+            <Filter filter={filter} setFilter={setFilter} />
+          </div>
+          <p className="hint-message">Drag and drop to reoder list</p>
+
+        </SortableContext>
       </DndContext>
     </>
   );

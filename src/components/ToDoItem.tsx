@@ -2,8 +2,9 @@ import { useContext } from "react";
 import ThemeContext from "../ThemeContext";
 import Cross from "../assets/icon-cross.svg";
 import { type TTask } from "../utils";
-import { useDraggable } from "@dnd-kit/core";
 import ToDoItemContent from "./ToDoItemContent";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 type ToDoItemProps = {
   toDo: TTask;
@@ -20,14 +21,13 @@ const ToDoItem = ({
 }: ToDoItemProps) => {
   const theme = useContext(ThemeContext);
 
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: toDo.id,
   });
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
-    : undefined;
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
 
   return (
     <>
