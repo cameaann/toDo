@@ -65,7 +65,10 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
   const toggleStatus = (id: string) => {
     const modifiedList = listItems.map((item) => {
       if (item.id === id) {
-        item.status = item.status === "done" ? "todo" : "done";
+        return {
+          ...item,
+          status: item.status === "done" ? "todo" : "done",
+        } as TTask;
       }
       return item;
     });

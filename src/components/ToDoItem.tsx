@@ -35,7 +35,6 @@ const ToDoItem = ({
         ref={setNodeRef}
         style={style}
         className={"todo line " + theme}
-        key={toDo.id}
         data-task-id={toDo.id}
       >
         <div {...listeners} {...attributes} className="drag-handle">
