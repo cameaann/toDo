@@ -19,19 +19,20 @@ const ToDoItemContent = ({ toDo, saveChanges }: ToDoItemContentProps) => {
   };
 
   const unsetEditMode = useCallback(() => {
-    const modifiedToDo = {...toDo, text: editedText.trim()};
+    const modifiedToDo = {...toDo, text: editedText};
     saveChanges(modifiedToDo);
     setEditMode(false);
     setEditedText(modifiedToDo.text);
   }, [editedText, saveChanges, toDo]);
 
   const debounceSave = useDebounce(() => {
-    const modifiedToDo = {...toDo, text: editedText.trim()};
+    const modifiedToDo = {...toDo, text: editedText};
     saveChanges(modifiedToDo);
   }, 500);
 
   const editToDo = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
+
     setEditedText(value);
     debounceSave();
   };

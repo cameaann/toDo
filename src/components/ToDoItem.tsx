@@ -52,9 +52,10 @@ const ToDoItem = ({
         <button
           id={toDo.id}
           className="deleteBtn"
+          aria-label={`Delete todo: ${toDo.text}`}
           onClick={() => onDelete(toDo.id)}
         >
-          <img className="cross" src={Cross} />
+          <img alt="Delete" className="cross" src={Cross} />
         </button>
       </div>
     </>

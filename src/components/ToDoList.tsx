@@ -8,7 +8,6 @@ import {
   useSensors,
   MouseSensor,
   TouchSensor,
-  KeyboardSensor,
   useSensor,
   closestCenter,
   type DragEndEvent,
@@ -16,7 +15,6 @@ import {
 import {
   SortableContext,
   arrayMove,
-  sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import ListFooter from "./ListFooter";
@@ -41,9 +39,6 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
         delay: 150, // wait 150ms before drag starts
         tolerance: 5, // move 5px before it's considered a drag
       },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
     })
   );
 
@@ -74,7 +69,6 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
     });
     setListItems(modifiedList);
   };
-
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -112,18 +106,13 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
   const filteredItems = filterItems(filter);
 
   const clearCompleted = () => {
-    const modifiedList = listItems.filter((item) => item.status !== "done");
-    setListItems(modifiedList);
+    setListItems((prev)=> prev.filter((item) => item.status !== "done"));
   };
 
   const saveChanges = (updatedItem: TTask) => {
-    const modifiedList = listItems.map((item) => {
-      if (item.id === updatedItem.id) {
-        return updatedItem;
-      }
-      return item;
-    });
-    setListItems(modifiedList);
+    setListItems((prev) =>
+      prev.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+    );
   };
 
   return (
@@ -162,7 +151,6 @@ const ToDoList = ({ toDoList }: toDoListProps) => {
             <Filter filter={filter} setFilter={setFilter} />
           </div>
           <p className="hint-message">Drag and drop to reoder list</p>
-
         </SortableContext>
       </DndContext>
     </>

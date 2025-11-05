@@ -6,6 +6,7 @@ import {
 } from "react";
 import { type TTask } from "../utils";
 import ThemeContext from "../ThemeContext";
+import { nanoid } from 'nanoid';
 
 type ToDoFormProps = {
   addItem: (item: TTask) => void;
@@ -22,7 +23,7 @@ const ToDoForm = ({ addItem }: ToDoFormProps) => {
   const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && toDo.trim() !== "") {
       const item: TTask = {
-        id: Date.now().toString(),
+        id: nanoid(),
         text: toDo,
         status: "todo",
       };
