@@ -19,14 +19,14 @@ const ToDoItemContent = ({ toDo, saveChanges }: ToDoItemContentProps) => {
   };
 
   const unsetEditMode = useCallback(() => {
-    const modifiedToDo = {...toDo, text: editedText};
+    const modifiedToDo = { ...toDo, text: editedText };
     saveChanges(modifiedToDo);
     setEditMode(false);
     setEditedText(modifiedToDo.text);
   }, [editedText, saveChanges, toDo]);
 
   const debounceSave = useDebounce(() => {
-    const modifiedToDo = {...toDo, text: editedText};
+    const modifiedToDo = { ...toDo, text: editedText };
     saveChanges(modifiedToDo);
   }, 500);
 
@@ -46,8 +46,10 @@ const ToDoItemContent = ({ toDo, saveChanges }: ToDoItemContentProps) => {
 
   useEffect(() => {
     if (editMode) {
-      handleInput();
-        if (ref.current) ref.current.focus();
+      if (ref.current) {
+        ref.current.focus(); // Focus once when entering edit mode
+        handleInput(); // Resize once on edit start
+      }
     }
   }, [editMode, editedText]);
 

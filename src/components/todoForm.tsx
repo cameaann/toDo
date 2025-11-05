@@ -20,8 +20,9 @@ const ToDoForm = ({ addItem }: ToDoFormProps) => {
     const { value } = e.target;
     setToDo(value);
   };
-  const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && toDo.trim() !== "") {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (toDo.trim() !== "") {
       const item: TTask = {
         id: nanoid(),
         text: toDo,
@@ -32,14 +33,14 @@ const ToDoForm = ({ addItem }: ToDoFormProps) => {
     }
   };
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
         className={"todoInput " + theme}
         id="createTask"
         value={toDo}
         onChange={handleChange}
-        onKeyDown={handleSubmit}
+        // onKeyDown={handleSubmit}
         placeholder="Create a new todo"
       />
     </form>
